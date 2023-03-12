@@ -1,0 +1,28 @@
+server:
+  port: 8062
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/mydb
+  jpa:
+    hibernate:
+      ddl-auto: update
+  application:
+    name: bookservice
+resilience4j:
+  circuitbreaker:
+    instances:
+      bookser: 
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        sliding-window-type: count-based
+      
+          
